@@ -50,6 +50,20 @@ router.get('/:applicationId', async (req, res) => {
   }
 });
 
+router.get('/:applicationId/edit', async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.session.user._id);
+    const application = currentUser.applications.id(req.params.applicationId);
+    res.render('applications/edit.ejs', {
+      application: application,
+    });
+  } catch (error) {
+    console.log(error);
+    res.redirect('/')
+  }
+});
+
+
 router.delete('/:applicationId', async (req, res) => {
   try {
     const currentUser = await User.findById(req.session.user._id);
