@@ -33,7 +33,7 @@ app.use(
 );
 
 app.use(passUserToView);
-
+// here is a comment
 app.get('/', (req, res) => {
   if (req.session.user) {
     res.redirect(`/users/${req.session.user._id}/applications`);
