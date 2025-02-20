@@ -15,6 +15,11 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET /users/:userId/applications/new
+router.get('/new', async (req, res) => {
+  res.render('applications/new.ejs');
+});
+
 
 
 
