@@ -8,6 +8,9 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require('express-session');
 
+const isSignedIn = require('./middleware/is-signed-in.js');
+const passUserToView = require('./middleware/pass-user-to-view.js');
+
 const authController = require('./controllers/auth');
 
 // Set the port from environment variable or default to 3000
@@ -31,6 +34,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+app.use(passUserToView); // pass that user information to an EJS template
 
 app.get('/', async (req, res) => {
   res.render('index.ejs', {
@@ -38,7 +42,8 @@ app.get('/', async (req, res) => {
   });
 });
 
-app.use('/auth', authController);
+app.use('/auth', authController); // these are the auth routes
+app.use(isSignedIn); // middleware
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
